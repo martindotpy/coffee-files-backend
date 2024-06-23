@@ -55,7 +55,22 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Coffee files dependency -->
+		<dependency>
+			<groupId>com.github.luisBazanDev</groupId>
+			<artifactId>coffee-files</artifactId>
+			<version>main-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
+
+	<!-- Jit pack repository to use any GitHub project as a dependency -->
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
