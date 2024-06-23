@@ -1,8 +1,10 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
+### Java ###
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+### Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -31,3 +33,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Others ###
+HELP.md
