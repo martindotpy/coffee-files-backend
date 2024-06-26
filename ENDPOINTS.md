@@ -1,3 +1,5 @@
+# Endpoints
+
 ## Objects
 
 FileType
@@ -74,7 +76,7 @@ type Sav {
 
 - [ ] completed
 
-```
+```http
 // Import
 POST /system/import
 
@@ -90,7 +92,7 @@ body {
 
 - [ ] completed
 
-```
+```http
 // Create
 POST /system/create
 
@@ -102,7 +104,7 @@ POST /system/create
 
 - [ ] completed
 
-```
+```http
 // Status
 GET /system/status
 
@@ -115,7 +117,7 @@ GET /system/status
 
 - [ ] completed
 
-```
+```http
 // Sync/Resume
 GET /system/sync
 
@@ -129,7 +131,7 @@ GET /system/sync
 
 - [ ] completed
 
-```
+```http
 // Logout
 POST /system/logout
 
@@ -142,7 +144,7 @@ POST /system/logout
 
 - [ ] completed
 
-```
+```http
 // Upload file
 POST /files/upload
 
@@ -161,7 +163,7 @@ body {
 
 - [ ] completed
 
-```
+```http
 // Create file
 POST /files/create
 
@@ -181,7 +183,7 @@ body {
 
 - [ ] completed
 
-```
+```http
 // Read content file
 POST /files/read
 
@@ -200,7 +202,7 @@ body {
 
 - [ ] completed
 
-```
+```http
 // Edit file
 POST /files/edit
 
@@ -219,7 +221,7 @@ body {
 
 - [ ] completed
 
-```
+```http
 // Delete file
 POST /files/delete
 
@@ -238,7 +240,7 @@ body {
 
 [How download](https://github.com/martindotpy/proyecto_algoritmos_estrucutras_de_datos/blob/main/app/src/main/java/pe/edu/utp/springboot/ApiController.java#L183)
 
-```
+```http
 // Download file
 GET /files/download
 
@@ -255,7 +257,7 @@ body {
 
 - [ ] completed
 
-```
+```http
 // File move
 POST /files/move
 
@@ -273,36 +275,36 @@ body {
 
 ### Folders
 
-```
+```http
 // Create folder
 ```
 
-```
+```http
 // Rename folder
 ```
 
-```
+```http
 // Move folder
 ```
 
-```
+```http
 // Delete folder
 ```
 
 ### Disk
 
-```
+```http
 // Create disk. Default folder structure: true/false
 ```
 
-```
+```http
 // Rename disk.
 ```
 
-```
+```http
 // Delete disk
 ```
 
-```
+```http
 // Export disk. Export only this disk if possible
 ```
