@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.AllArgsConstructor;
-import xyz.coffee.backend.exception.JwtNotFoundException;
+
 import xyz.coffee.backend.service.auth.interfaces.JwtService;
 
 import java.io.IOException;
@@ -46,6 +46,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return authHeader.substring(7);
         }
 
-        throw new JwtNotFoundException("The JWT token was not found in the request headers.");
+        return null;
     }
 }
