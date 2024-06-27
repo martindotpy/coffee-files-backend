@@ -17,11 +17,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Temp
 import org.springframework.context.annotation.Bean;
 
-import xyz.coffee.backend.service.auth.api.interfaces.SavFileExporter;
-import xyz.cupscoffee.files.api.implementation.BasicDisk;
-import xyz.cupscoffee.files.api.implementation.BasicFile;
-import xyz.cupscoffee.files.api.implementation.BasicFolder;
-import xyz.cupscoffee.files.api.implementation.BasicSavFile;
+import xyz.coffee.backend.service.auth.api.interfaces.SavStructureExporter;
+import xyz.cupscoffee.files.api.implementation.SimpleDisk;
+import xyz.cupscoffee.files.api.implementation.SimpleFile;
+import xyz.cupscoffee.files.api.implementation.SimpleFolder;
+import xyz.cupscoffee.files.api.implementation.SimpleSavStructure;
 
 @SpringBootApplication
 public class CoffeeFilesBackendApplication {
@@ -31,7 +31,7 @@ public class CoffeeFilesBackendApplication {
 
     // Temp
     @Autowired
-    private SavFileExporter savFileWriter;
+    private SavStructureExporter savStructureWriter;
 
     @Bean
     CommandLineRunner init() {
@@ -43,62 +43,56 @@ public class CoffeeFilesBackendApplication {
             Map<String, String> metadata = new java.util.HashMap<>();
             metadata.put("author", "Elder");
 
-            BasicFile basicFile = new BasicFile("archivo.js",
+            SimpleFile simpleFile = new SimpleFile("archivo.js",
                     fileContentBuffer,
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    fileContentBuffer.capacity(),
                     Path.of("A:\\directorio\\otro_directorio\\archivo.js"),
                     metadata);
-            BasicFolder basicFolder1 = new BasicFolder("otro_directorio",
-                    List.of(basicFile),
+            SimpleFolder simpleFolder1 = new SimpleFolder("otro_directorio",
+                    List.of(simpleFile),
                     new LinkedList<>(),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    fileContentBuffer.capacity(),
                     Path.of("A:\\directorio\\otro_directorio"),
                     metadata);
-            BasicFolder basicFolder2 = new BasicFolder("directorio",
+            SimpleFolder simpleFolder2 = new SimpleFolder("directorio",
                     new java.util.LinkedList<>(),
                     new LinkedList<>(),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    fileContentBuffer.capacity(),
                     Path.of("A:\\directorio\\directorio"),
                     metadata);
-            BasicFolder basicFolder3 = new BasicFolder("directorio",
+            SimpleFolder simpleFolder3 = new SimpleFolder("directorio",
                     new java.util.LinkedList<>(),
-                    List.of(basicFolder1, basicFolder2),
+                    List.of(simpleFolder1, simpleFolder2),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    fileContentBuffer.capacity(),
                     Path.of("A:\\directorio"),
                     metadata);
-            BasicFolder root = new BasicFolder("",
+            SimpleFolder root = new SimpleFolder("",
                     new java.util.LinkedList<>(),
-                    List.of(basicFolder3),
+                    List.of(simpleFolder3),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    fileContentBuffer.capacity(),
                     Path.of("A:\\"),
                     metadata);
 
-            BasicDisk basicDisk = new BasicDisk("A",
+            SimpleDisk simpleDisk = new SimpleDisk("A",
                     root,
                     root.getSize() * 3,
-                    root.getSize(),
                     new java.util.HashMap<>());
 
-            BasicSavFile savFile = new BasicSavFile(
+            SimpleSavStructure savFile = new SimpleSavStructure(
                     "CupsOfCoffee",
-                    new BasicDisk[] { basicDisk },
+                    new SimpleDisk[] { simpleDisk },
                     new java.util.HashMap<>());
 
             try (FileOutputStream fileOutputStream = new FileOutputStream("tcoc.sav")) {
-                byte[] savFileBytes = savFileWriter.export(savFile);
+                byte[] savFileBytes = savStructureWriter.toBytes(savFile);
                 fileOutputStream.write(savFileBytes);
             } catch (Exception e) {
-                
+
             }
         };
     }

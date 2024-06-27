@@ -1,11 +1,10 @@
 package xyz.coffee.backend.service.auth.api.implementation;
 
-import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.zip.ZipEntry;
 
 import org.springframework.stereotype.Service;
 
@@ -14,16 +13,16 @@ import xyz.cupscoffee.files.api.Disk;
 import xyz.cupscoffee.files.api.File;
 import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.Metadata;
-import xyz.cupscoffee.files.api.SavFile;
-import xyz.cupscoffee.files.api.util.StringCompressor;
+import xyz.cupscoffee.files.api.SavStructure;
+import xyz.cupscoffee.files.api.util.StringCompresor;
 
-import xyz.coffee.backend.service.auth.api.interfaces.SavFileExporter;
+import xyz.coffee.backend.service.auth.api.interfaces.SavStructureExporter;
 
 @Service
-public class SavFileExporterImpl implements SavFileExporter {
+public class SavStructureExporterImpl implements SavStructureExporter {
 
     @Override
-    public byte[] export(SavFile savFile) {
+    public byte[] toBytes(SavStructure savFile) throws UnsupportedEncodingException {
         StringBuilder sb = new StringBuilder();
 
         // Get the header
@@ -36,14 +35,14 @@ public class SavFileExporterImpl implements SavFileExporter {
             sb.append(disk.getName() + ":");
             loadFolderAsString(disks[i].getRootFolder(), sb);
 
-            if (i < disks.length - 1) {
-                sb.append("\n");
-            }
+            sb.append("\n");
         }
+
+        sb.append(savFile.getMetadata());
 
         String savFileContent = sb.toString();
 
-        return StringCompresor.compress(savFileContent);
+        return StringCompresor.compress(savFileContent).getBytes();
     }
 
     private void loadFolderAsString(Folder folder, StringBuilder sb) {
