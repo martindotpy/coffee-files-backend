@@ -1,5 +1,6 @@
 package xyz.coffee.backend;
 
+import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Temp
 import org.springframework.context.annotation.Bean;
 
-import xyz.coffee.backend.service.auth.api.interfaces.SavFileWriter;
+import xyz.coffee.backend.service.auth.api.interfaces.SavFileExporter;
 import xyz.cupscoffee.files.api.implementation.BasicDisk;
 import xyz.cupscoffee.files.api.implementation.BasicFile;
 import xyz.cupscoffee.files.api.implementation.BasicFolder;
@@ -30,7 +31,7 @@ public class CoffeeFilesBackendApplication {
 
     // Temp
     @Autowired
-    private SavFileWriter savFileWriter;
+    private SavFileExporter savFileWriter;
 
     @Bean
     CommandLineRunner init() {
@@ -88,11 +89,17 @@ public class CoffeeFilesBackendApplication {
                     root.getSize(),
                     new java.util.HashMap<>());
 
-            BasicSavFile savFile = new BasicSavFile("CupsOfCoffee",
+            BasicSavFile savFile = new BasicSavFile(
+                    "CupsOfCoffee",
                     new BasicDisk[] { basicDisk },
                     new java.util.HashMap<>());
-                    
-            savFileWriter.write(savFile);
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream("tcoc.sav")) {
+                byte[] savFileBytes = savFileWriter.export(savFile);
+                fileOutputStream.write(savFileBytes);
+            } catch (Exception e) {
+                
+            }
         };
     }
 }

@@ -1,9 +1,11 @@
 package xyz.coffee.backend.service.auth.api.implementation;
 
+import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.zip.ZipEntry;
 
 import org.springframework.stereotype.Service;
 
@@ -13,14 +15,15 @@ import xyz.cupscoffee.files.api.File;
 import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.Metadata;
 import xyz.cupscoffee.files.api.SavFile;
+import xyz.cupscoffee.files.api.util.StringCompressor;
 
-import xyz.coffee.backend.service.auth.api.interfaces.SavFileWriter;
+import xyz.coffee.backend.service.auth.api.interfaces.SavFileExporter;
 
 @Service
-public class SavFileWriterImpl implements SavFileWriter {
+public class SavFileExporterImpl implements SavFileExporter {
 
     @Override
-    public void write(SavFile savFile) {
+    public byte[] export(SavFile savFile) {
         StringBuilder sb = new StringBuilder();
 
         // Get the header
@@ -37,6 +40,10 @@ public class SavFileWriterImpl implements SavFileWriter {
                 sb.append("\n");
             }
         }
+
+        String savFileContent = sb.toString();
+
+        return StringCompresor.compress(savFileContent);
     }
 
     private void loadFolderAsString(Folder folder, StringBuilder sb) {
