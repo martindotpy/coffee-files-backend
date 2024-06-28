@@ -1,4 +1,4 @@
-package xyz.coffee.backend.api;
+package xyz.cupscoffee.backend.api;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import xyz.coffee.backend.service.api.implementation.SavStructureExporterImpl;
+import xyz.cupscoffee.backend.service.api.implementation.SavStructureExporterImpl;
 import xyz.cupscoffee.files.api.SavFileReader;
 import xyz.cupscoffee.files.api.SavStructure;
 import xyz.cupscoffee.files.api.implementation.SimpleDisk;

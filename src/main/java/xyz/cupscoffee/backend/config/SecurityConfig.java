@@ -1,4 +1,4 @@
-package xyz.coffee.backend.config;
+package xyz.cupscoffee.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.AllArgsConstructor;
-import xyz.coffee.backend.service.auth.FileSavFilter;
+import xyz.cupscoffee.backend.service.auth.FileSavFilter;
 
 @Configuration
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package xyz.coffee.backend.service.api.interfaces;
+package xyz.cupscoffee.backend.service.api.interfaces;
 
 import java.io.UnsupportedEncodingException;
 

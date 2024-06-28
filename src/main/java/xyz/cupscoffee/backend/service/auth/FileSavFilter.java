@@ -1,4 +1,4 @@
-package xyz.coffee.backend.service.auth;
+package xyz.cupscoffee.backend.service.auth;
 
 import java.io.IOException;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package xyz.coffee.backend.config;
+package xyz.cupscoffee.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

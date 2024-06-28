@@ -1,4 +1,4 @@
-package xyz.coffee.backend.model;
+package xyz.cupscoffee.backend.model;
 
 import java.util.Map;
 
