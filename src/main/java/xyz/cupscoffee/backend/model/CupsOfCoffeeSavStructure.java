@@ -1,9 +1,9 @@
 package xyz.cupscoffee.backend.model;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+
+import java.util.Map;
 
 import xyz.cupscoffee.files.api.Disk;
 import xyz.cupscoffee.files.api.implementation.SimpleSavStructure;
