@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>com.github.luisBazanDev</groupId>
 			<artifactId>coffee-files</artifactId>
-			<version>main-SNAPSHOT</version>
+			<version>development-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

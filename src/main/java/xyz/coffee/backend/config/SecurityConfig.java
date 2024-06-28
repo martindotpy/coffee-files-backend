@@ -8,11 +8,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import lombok.AllArgsConstructor;
+import xyz.coffee.backend.service.auth.FileSavFilter;
+
 @Configuration
+@AllArgsConstructor
 public class SecurityConfig {
+    private final FileSavFilter fileSavFilter;
+
     @Bean
     public SecurityFilterChain checkJwt(HttpSecurity http) throws Exception {
         return http
@@ -20,10 +27,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authRequest -> {
                             authRequest
-                                    .requestMatchers("/api/hello").permitAll()
+                                    .requestMatchers("/api/hello", "/api/load").permitAll()
                                     .anyRequest().authenticated();
                         })
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(fileSavFilter, AnonymousAuthenticationFilter.class)
                 .build();
     }
 

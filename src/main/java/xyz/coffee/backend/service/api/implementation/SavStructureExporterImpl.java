@@ -1,4 +1,4 @@
-package xyz.coffee.backend.service.auth.api.implementation;
+package xyz.coffee.backend.service.api.implementation;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -9,14 +9,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.lang.Arrays;
+import xyz.coffee.backend.service.api.interfaces.SavStructureExporter;
 import xyz.cupscoffee.files.api.Disk;
 import xyz.cupscoffee.files.api.File;
 import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.Metadata;
 import xyz.cupscoffee.files.api.SavStructure;
 import xyz.cupscoffee.files.api.util.StringCompresor;
-
-import xyz.coffee.backend.service.auth.api.interfaces.SavStructureExporter;
 
 @Service
 public class SavStructureExporterImpl implements SavStructureExporter {
