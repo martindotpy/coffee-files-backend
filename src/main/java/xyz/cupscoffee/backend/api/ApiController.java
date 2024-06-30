@@ -6,14 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
-import jakarta.servlet.http.HttpSession;
-
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
 public class ApiController {
-    private final HttpSession session;
-
     // Hello world
     @GetMapping("/hello")
     public String helloWorld() {

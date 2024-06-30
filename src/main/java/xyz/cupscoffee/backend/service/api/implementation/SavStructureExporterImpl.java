@@ -69,7 +69,7 @@ public class SavStructureExporterImpl implements SavStructureExporter {
         sb.append("*" + file.getName() + "{");
 
         String content = new String(file.getContent().array(), StandardCharsets.UTF_8);
-        ;
+
         sb.append(content);
 
         sb.append("}");
