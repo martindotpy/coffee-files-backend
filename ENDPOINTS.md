@@ -33,12 +33,25 @@
   }
   ```
 
+- FileStructure
+
+  ```ts
+  type FileStructure {
+    name: string;
+    created: number;
+    last_modified: number;
+    size: number;
+    type: TypeFile;
+    path: Path;
+  }
+  ```
+
 - Folder
 
   ```ts
   type Folder {
     name: string;
-    files: File[];
+    files: FileStructure[];
     folders: Folder[];
     created: number;
     last_modified: number;
