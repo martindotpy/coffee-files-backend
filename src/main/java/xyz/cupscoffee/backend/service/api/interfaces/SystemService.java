@@ -13,5 +13,5 @@ public interface SystemService {
 
     SavStructure syncSavStructure();
 
-    byte[] export(SavStructure savStructure) throws UnsupportedEncodingException;
+    byte[] export() throws UnsupportedEncodingException;
 }

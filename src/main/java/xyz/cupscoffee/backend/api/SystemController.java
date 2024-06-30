@@ -26,7 +26,6 @@ import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
 @RequestMapping("/api/system")
 @AllArgsConstructor
 public class SystemController {
-    private final HttpSession session;
     private final SystemService systemService;
 
     @PostMapping("/import")
@@ -44,15 +43,13 @@ public class SystemController {
 
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportSavFile() throws InvalidFormatFileException, UnsupportedEncodingException {
-        SavStructure savStructure = (SavStructure) session.getAttribute("file");
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", "CupsOfCoffee.sav");
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(systemService.export(savStructure));
+                .body(systemService.export());
 
     }
 

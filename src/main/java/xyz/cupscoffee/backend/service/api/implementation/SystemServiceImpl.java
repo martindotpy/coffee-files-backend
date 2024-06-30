@@ -44,14 +44,15 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
-    public byte[] export(SavStructure savFile) throws UnsupportedEncodingException {
+    public byte[] export() throws UnsupportedEncodingException {
+        SavStructure savStructure = (SavStructure) session.getAttribute("file");
         StringBuilder sb = new StringBuilder();
 
         // Get the header
-        sb.append(savFile.getHeader() + "\n");
+        sb.append(savStructure.getHeader() + "\n");
 
         // Write the disks
-        Disk[] disks = savFile.getDisks();
+        Disk[] disks = savStructure.getDisks();
         for (int i = 0; i < disks.length; i++) {
             Disk disk = disks[i];
             sb.append(String.format("%s(%d)[%s]:", disk.getName(), disk.getLimitSize(), disk.getMetadata()));
@@ -60,11 +61,11 @@ public class SystemServiceImpl implements SystemService {
             sb.append("\n");
         }
 
-        sb.append(savFile.getMetadata());
+        sb.append(savStructure.getMetadata());
 
-        String savFileContent = sb.toString();
+        String savStructureContent = sb.toString();
 
-        return savFileContent.getBytes();
+        return savStructureContent.getBytes();
     }
 
     private void loadFolderAsString(Folder folder, StringBuilder sb) {
