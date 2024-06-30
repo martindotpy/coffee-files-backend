@@ -44,20 +44,17 @@ public class SystemController {
     }
 
     @GetMapping("/export")
-    public ResponseEntity<byte[]> exportSavFile() throws InvalidFormatFileException {
+    public ResponseEntity<byte[]> exportSavFile() throws InvalidFormatFileException, UnsupportedEncodingException {
         SavStructure savStructure = (SavStructure) session.getAttribute("file");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", "CupsOfCoffee.sav");
 
-        try {
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(savStructureExporter.toBytes(savStructure));
-        } catch (UnsupportedEncodingException e) {
-            throw new InvalidFormatFileException("Error to export the file");
-        }
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(savStructureExporter.toBytes(savStructure));
+
     }
 
     @GetMapping("/status")
