@@ -300,6 +300,19 @@
 // Delete folder
 ```
 
+A:\
+  themes\
+    golden_sunrise.json // From project resources
+
+B:\
+  user\
+    Documents\
+    Downloads\
+    Images\
+      themes\
+        golden_sunrise.jpg // From project resources
+    Projects\
+
 ### Disk
 
 ```http

@@ -11,16 +11,28 @@ import xyz.cupscoffee.files.api.Metadata;
 import xyz.cupscoffee.files.api.SavFileReader;
 import xyz.cupscoffee.files.api.SavStructure;
 import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
+import xyz.cupscoffee.files.api.implementation.SimpleDisk;
+import xyz.cupscoffee.files.api.implementation.SimpleFile;
+import xyz.cupscoffee.files.api.implementation.SimpleFolder;
+import xyz.cupscoffee.files.api.implementation.SimpleSavStructure;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
+import xyz.cupscoffee.backend.util.PathUtil;
 
 @Service
 @AllArgsConstructor
@@ -33,9 +45,141 @@ public class SystemServiceImpl implements SystemService {
         session.setAttribute("file", savStructure);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public SavStructure createDefaultSavStructure() {
-        throw new UnsupportedOperationException("Unimplemented method 'createDefaultSavStructure'");
+    public SavStructure createDefaultSavStructure() throws FileNotFoundException, IOException {
+        // Load golden_sunrise.json and golden_sunrise.jpg from resources
+        java.io.File goldenSunriseJsonFile = PathUtil.getResourcePath()
+                .relativize(Path.of("golden_sunrise.json"))
+                .toFile();
+        java.io.File goldenSunriseJpgFile = PathUtil.getResourcePath()
+                .relativize(Path.of("golden_sunrise.jpg"))
+                .toFile();
+
+        HashMap<String, String> metadata = new HashMap<>();
+        metadata.put("author", "user");
+        SimpleFile goldenSunriseJson = null;
+        try (FileInputStream fis = new FileInputStream(goldenSunriseJsonFile)) {
+            goldenSunriseJson = new SimpleFile(
+                    goldenSunriseJsonFile.getName(),
+                    ByteBuffer.wrap(fis.readAllBytes()),
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    Path.of("", "themes", goldenSunriseJsonFile.getName()),
+                    (HashMap<String, String>) metadata.clone());
+
+        } catch (FileNotFoundException e) {
+            throw e;
+        }
+        SimpleFile goldenSunriseJpg = null;
+        try (FileInputStream fis = new FileInputStream(goldenSunriseJpgFile)) {
+            goldenSunriseJpg = new SimpleFile(
+                    goldenSunriseJpgFile.getName(),
+                    ByteBuffer.wrap(fis.readAllBytes()),
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    Path.of("", "themes", goldenSunriseJpgFile.getName()),
+                    (HashMap<String, String>) metadata.clone());
+
+        } catch (FileNotFoundException e) {
+            throw e;
+        }
+
+        SimpleFolder themesA = new SimpleFolder(
+                "themes",
+                List.of(goldenSunriseJson),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "themes"),
+                metadata);
+        SimpleFolder themesB = new SimpleFolder(
+                "themes",
+                List.of(goldenSunriseJpg),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "user", "Images", "themes"),
+                metadata);
+
+        SimpleFolder documents = new SimpleFolder(
+                "Documents",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "user", "Documents"),
+                metadata);
+        SimpleFolder downloads = new SimpleFolder(
+                "Downloads",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "user", "Downloads"),
+                metadata);
+        SimpleFolder images = new SimpleFolder(
+                "Images",
+                new LinkedList<>(),
+                List.of(themesB),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "user", "Images"),
+                metadata);
+        SimpleFolder projects = new SimpleFolder(
+                "Projects",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "user", "Projects"),
+                metadata);
+
+        SimpleFolder user = new SimpleFolder(
+                "user",
+                new LinkedList<>(),
+                List.of(documents, downloads, images, projects),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "user"),
+                metadata);
+
+        SimpleFolder rootA = new SimpleFolder(
+                "",
+                new LinkedList<>(),
+                List.of(themesA),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of(""),
+                metadata);
+        SimpleFolder rootB = new SimpleFolder(
+                "",
+                new LinkedList<>(),
+                List.of(user),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of(""),
+                metadata);
+
+        SimpleDisk diskA = new SimpleDisk(
+                "A",
+                rootA,
+                2400,
+                metadata);
+        SimpleDisk diskB = new SimpleDisk(
+                "B",
+                rootB,
+                2400,
+                metadata);
+
+        Disk[] disks = { diskA, diskB };
+
+        SimpleSavStructure savStructure = new SimpleSavStructure(
+                "CupsOfCoffee",
+                disks,
+                metadata);
+
+        return savStructure;
     }
 
     @Override
