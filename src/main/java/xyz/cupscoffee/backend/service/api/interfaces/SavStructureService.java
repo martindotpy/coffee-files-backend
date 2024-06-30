@@ -4,6 +4,6 @@ import java.io.UnsupportedEncodingException;
 
 import xyz.cupscoffee.files.api.SavStructure;
 
-public interface SavStructureExporter {
+public interface SavStructureService {
     byte[] toBytes(SavStructure savStructure) throws UnsupportedEncodingException;
 }

@@ -15,10 +15,10 @@ import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.Metadata;
 import xyz.cupscoffee.files.api.SavStructure;
 
-import xyz.cupscoffee.backend.service.api.interfaces.SavStructureExporter;
+import xyz.cupscoffee.backend.service.api.interfaces.SavStructureService;
 
 @Service
-public class SavStructureExporterImpl implements SavStructureExporter {
+public class SavStructureExporterImpl implements SavStructureService {
 
     @Override
     public byte[] toBytes(SavStructure savFile) throws UnsupportedEncodingException {
