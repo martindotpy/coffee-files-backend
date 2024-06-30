@@ -15,15 +15,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+
+import jakarta.servlet.http.HttpSession;
+
+import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
+import xyz.cupscoffee.files.api.SavFileReader;
+import xyz.cupscoffee.files.api.SavStructure;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import xyz.cupscoffee.files.api.SavFileReader;
-import xyz.cupscoffee.files.api.SavStructure;
-import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
 import xyz.cupscoffee.backend.api.request.CreateFileRequest;
 import xyz.cupscoffee.backend.api.request.DeleteFileRequest;
 import xyz.cupscoffee.backend.api.request.DownloadFileRequest;
@@ -129,6 +131,13 @@ public class ApiController {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
+    // Hello world
+    @GetMapping("/hello")
+    public String helloWorld() {
+        return "Hello, World!";
+    }
+
+    // Handler exception
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFormatFileException.class)
     public String handleInvalidFormatFileException() {
@@ -145,10 +154,5 @@ public class ApiController {
     @ExceptionHandler(UnsupportedOperationException.class)
     public String handleUnsupportedOperationException(UnsupportedOperationException e) {
         return e.getMessage();
-    }
-
-    @GetMapping("/hello")
-    public String helloWorld() {
-        return "Hello, World!";
     }
 }
