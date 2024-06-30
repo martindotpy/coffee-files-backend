@@ -1,6 +1,7 @@
 package xyz.cupscoffee.backend.api;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +25,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(IOException.class)
     public String handleIOException(IOException e) {
         return "Error to load the file: " + e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UnsupportedEncodingException.class)
+    public String handleUnsupportedEncodingException() {
+        return "Error to export the file";
     }
 
     @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
