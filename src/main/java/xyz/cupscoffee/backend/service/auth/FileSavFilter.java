@@ -25,10 +25,16 @@ public class FileSavFilter extends OncePerRequestFilter {
             @SuppressWarnings("null") HttpServletResponse response,
             @SuppressWarnings("null") FilterChain filterChain)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (session.getAttribute("file") == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            session.invalidate();
             return;
         }
 

@@ -14,7 +14,6 @@ import xyz.cupscoffee.files.api.File;
 import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.Metadata;
 import xyz.cupscoffee.files.api.SavStructure;
-import xyz.cupscoffee.files.api.util.StringCompresor;
 
 import xyz.cupscoffee.backend.service.api.interfaces.SavStructureExporter;
 
@@ -32,7 +31,7 @@ public class SavStructureExporterImpl implements SavStructureExporter {
         Disk[] disks = savFile.getDisks();
         for (int i = 0; i < disks.length; i++) {
             Disk disk = disks[i];
-            sb.append(disk.getName() + ":");
+            sb.append(String.format("%s(%d)[%s]:", disk.getName(), disk.getLimitSize(), disk.getMetadata()));
             loadFolderAsString(disks[i].getRootFolder(), sb);
 
             sb.append("\n");
@@ -42,7 +41,7 @@ public class SavStructureExporterImpl implements SavStructureExporter {
 
         String savFileContent = sb.toString();
 
-        return StringCompresor.compress(savFileContent).getBytes();
+        return savFileContent.getBytes();
     }
 
     private void loadFolderAsString(Folder folder, StringBuilder sb) {
