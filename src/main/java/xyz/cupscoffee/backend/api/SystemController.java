@@ -1,5 +1,6 @@
 package xyz.cupscoffee.backend.api;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.AllArgsConstructor;
 import xyz.cupscoffee.backend.api.response.SyncResponse;
 import xyz.cupscoffee.backend.api.response.SystemStatusResponse;
+import xyz.cupscoffee.backend.api.squema.SavSquema;
 import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
 import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
 
@@ -34,8 +36,10 @@ public class SystemController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createSavFile() {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public ResponseEntity<SavSquema> createSavFile() throws FileNotFoundException, IOException {
+        SavSquema savSquema = SavSquema.from(systemService.createDefaultSavStructure());
+
+        return ResponseEntity.ok(savSquema);
     }
 
     @GetMapping("/export")

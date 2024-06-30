@@ -45,19 +45,27 @@ public class SystemServiceImpl implements SystemService {
         session.setAttribute("file", savStructure);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public SavStructure createDefaultSavStructure() throws FileNotFoundException, IOException {
         // Load golden_sunrise.json and golden_sunrise.jpg from resources
         java.io.File goldenSunriseJsonFile = PathUtil.getResourcePath()
-                .relativize(Path.of("golden_sunrise.json"))
+                .resolve(Path.of("themes", "golden_sunrise.json"))
                 .toFile();
         java.io.File goldenSunriseJpgFile = PathUtil.getResourcePath()
-                .relativize(Path.of("golden_sunrise.jpg"))
+                .resolve(Path.of("themes", "golden_sunrise.jpg"))
                 .toFile();
 
         HashMap<String, String> metadata = new HashMap<>();
         metadata.put("author", "user");
+
+        HashMap<String, String> metadataJson = new HashMap<>();
+        metadataJson.put("FileType", "JSON");
+        metadataJson.put("author", "user");
+
+        HashMap<String, String> metadataJpg = new HashMap<>();
+        metadataJpg.put("FileType", "JPG");
+        metadataJpg.put("author", "user");
+
         SimpleFile goldenSunriseJson = null;
         try (FileInputStream fis = new FileInputStream(goldenSunriseJsonFile)) {
             goldenSunriseJson = new SimpleFile(
@@ -66,7 +74,7 @@ public class SystemServiceImpl implements SystemService {
                     LocalDateTime.now(),
                     LocalDateTime.now(),
                     Path.of("", "themes", goldenSunriseJsonFile.getName()),
-                    (HashMap<String, String>) metadata.clone());
+                    metadataJson);
 
         } catch (FileNotFoundException e) {
             throw e;
@@ -79,7 +87,7 @@ public class SystemServiceImpl implements SystemService {
                     LocalDateTime.now(),
                     LocalDateTime.now(),
                     Path.of("", "themes", goldenSunriseJpgFile.getName()),
-                    (HashMap<String, String>) metadata.clone());
+                    metadataJpg);
 
         } catch (FileNotFoundException e) {
             throw e;
@@ -178,6 +186,8 @@ public class SystemServiceImpl implements SystemService {
                 "CupsOfCoffee",
                 disks,
                 metadata);
+
+        session.setAttribute("file", savStructure);
 
         return savStructure;
     }
