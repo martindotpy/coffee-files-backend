@@ -18,8 +18,7 @@ import xyz.cupscoffee.files.api.SavStructure;
 import xyz.cupscoffee.backend.service.api.interfaces.SavStructureService;
 
 @Service
-public class SavStructureExporterImpl implements SavStructureService {
-
+public class SavStructureServiceImpl implements SavStructureService {
     @Override
     public byte[] toBytes(SavStructure savFile) throws UnsupportedEncodingException {
         StringBuilder sb = new StringBuilder();
