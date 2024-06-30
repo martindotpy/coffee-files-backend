@@ -17,8 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import xyz.cupscoffee.backend.api.response.SyncResponse;
 import xyz.cupscoffee.backend.api.response.SystemStatusResponse;
-import xyz.cupscoffee.backend.service.api.interfaces.SavStructureService;
-import xyz.cupscoffee.files.api.Disk;
+import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
 import xyz.cupscoffee.files.api.SavFileReader;
 import xyz.cupscoffee.files.api.SavStructure;
 import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
@@ -28,7 +27,7 @@ import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
 @AllArgsConstructor
 public class SystemController {
     private final HttpSession session;
-    private final SavStructureService savStructureExporter;
+    private final SystemService systemService;
 
     @PostMapping("/import")
     public ResponseEntity<Void> loadSavFile(@RequestPart("file") MultipartFile file)
@@ -54,7 +53,7 @@ public class SystemController {
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(savStructureExporter.toBytes(savStructure));
+                .body(systemService.export(savStructure));
 
     }
 
