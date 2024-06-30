@@ -52,8 +52,8 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(@SuppressWarnings("null") CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:5173", "http://127.0.0.1:5173")
-                    .allowCredentials(true);
+                        .allowedOrigins("http://localhost:5173", "http://127.0.0.1:5173")
+                        .allowCredentials(true);
             }
         };
     }
