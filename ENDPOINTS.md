@@ -78,15 +78,10 @@ type Sav {
 
 ```http
 // Import
-POST /system/import
+POST /api/system/import
 
 body {
   file: MultipartFile,
-}
-
-200 response {
-  token: string,
-  client_uuid: string,
 }
 ```
 
@@ -94,19 +89,14 @@ body {
 
 ```http
 // Create
-POST /system/create
-
-200 response {
-  token: string,
-  client_uuid: string,
-}
+POST /api/system/create
 ```
 
 - [ ] completed
 
 ```http
 // Status
-GET /system/status
+GET /api/system/status
 
 200 response {
   state: READY | IMPORTING,
@@ -119,11 +109,10 @@ GET /system/status
 
 ```http
 // Sync/Resume
-GET /system/sync
+GET /api/system/sync
 
 200 response {
-  system: Sav,
-  client_uuid: string,
+  system: Sav
 }
 
 401 Unauthorized
@@ -133,7 +122,7 @@ GET /system/sync
 
 ```http
 // Logout
-POST /system/logout
+POST /api/system/logout
 
 200 response
 
@@ -146,7 +135,7 @@ POST /system/logout
 
 ```http
 // Upload file
-POST /files/upload
+POST /api/files/upload
 
 body {
   path: Path:"A:/dir1/app.txt",
@@ -165,7 +154,7 @@ body {
 
 ```http
 // Create file
-POST /files/create
+POST /api/files/create
 
 body {
   path: Path:"A:/dir1/app.txt",
@@ -185,7 +174,7 @@ body {
 
 ```http
 // Read content file
-POST /files/read
+POST /api/files/read
 
 body {
   path: Path:"A:/dir1/app.txt",
@@ -204,12 +193,12 @@ body {
 
 ```http
 // Edit file
-POST /files/edit
+POST /api/files/edit
 
 body {
   path: Path:"A:/dir1/app.json",
   content: string,
-  type: FileType,
+  type: FileType
 }
 
 200 response File
@@ -223,7 +212,7 @@ body {
 
 ```http
 // Delete file
-POST /files/delete
+POST /api/files/delete
 
 body {
   path: Path:"A:/dir1/app.txt",
@@ -242,7 +231,7 @@ body {
 
 ```http
 // Download file
-GET /files/download
+GET /api/files/download
 
 body {
   path: Path:"A:/dir1/app.json",
@@ -259,7 +248,7 @@ body {
 
 ```http
 // File move
-POST /files/move
+POST /api/files/move
 
 body {
   from: Path:"A:/dir1/app.json",

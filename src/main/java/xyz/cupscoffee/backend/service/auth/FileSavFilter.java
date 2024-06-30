@@ -38,6 +38,7 @@ public class FileSavFilter extends OncePerRequestFilter {
             return;
         }
 
+        session.setMaxInactiveInterval(60 * 60 * 60); // 1 hour
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
         Authentication auth = new UsernamePasswordAuthenticationToken(null, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(auth);
