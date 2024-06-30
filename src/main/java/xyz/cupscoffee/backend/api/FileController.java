@@ -1,5 +1,7 @@
 package xyz.cupscoffee.backend.api;
 
+import lombok.AllArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
 import xyz.cupscoffee.backend.api.request.CreateFileRequest;
 import xyz.cupscoffee.backend.api.request.DeleteFileRequest;
 import xyz.cupscoffee.backend.api.request.DownloadFileRequest;
@@ -26,41 +26,39 @@ import xyz.cupscoffee.backend.api.squema.FileSquema;
 @RequestMapping("/api/files")
 @AllArgsConstructor
 public class FileController {
-    private final HttpSession session;
-
-    @PatchMapping("/files/upload")
+    @PatchMapping("/upload")
     public ResponseEntity<FileSquema> uploadFile(
             @RequestPart("file") MultipartFile file,
             UploadFileRequest uploadFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    @PostMapping("/files/create")
+    @PostMapping("/create")
     public ResponseEntity<FileSquema> createFile(CreateFileRequest createFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    @GetMapping("/files/read")
+    @GetMapping("/read")
     public ResponseEntity<ReadFileContentResponse> readFile(ReadContentFileRequest readFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    @PatchMapping("/files/edit")
+    @PatchMapping("/edit")
     public ResponseEntity<FileSquema> editFile(EditFileRequest editFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    @DeleteMapping("/files/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteFile(DeleteFileRequest deleteFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    @GetMapping("/files/delete")
+    @GetMapping("/download")
     public ResponseEntity<byte[]> downloadFile(DownloadFileRequest downloadFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    @PostMapping("/files/move")
+    @PostMapping("/move")
     public ResponseEntity<FileSquema> moveFile(MoveFileRequest moveFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }

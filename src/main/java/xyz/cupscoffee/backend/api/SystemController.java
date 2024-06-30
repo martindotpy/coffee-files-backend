@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import xyz.cupscoffee.backend.api.response.SyncResponse;
 import xyz.cupscoffee.backend.api.response.SystemStatusResponse;
 import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
-import xyz.cupscoffee.files.api.SavFileReader;
-import xyz.cupscoffee.files.api.SavStructure;
 import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
 
 @RestController
