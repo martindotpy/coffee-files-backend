@@ -95,6 +95,13 @@ POST /api/system/create
 - [ ] completed
 
 ```http
+// Export
+GET /api/system/export
+```
+
+- [ ] completed
+
+```http
 // Status
 GET /api/system/status
 
