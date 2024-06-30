@@ -32,8 +32,7 @@ public class SystemController {
     @PostMapping("/import")
     public ResponseEntity<Void> loadSavFile(@RequestPart("file") MultipartFile file)
             throws InvalidFormatFileException, IOException {
-        SavStructure savStructure = SavFileReader.readSavFile(file.getInputStream());
-        session.setAttribute("file", savStructure);
+        systemService.importSavStructure(file.getInputStream());
 
         return ResponseEntity.ok().build();
     }

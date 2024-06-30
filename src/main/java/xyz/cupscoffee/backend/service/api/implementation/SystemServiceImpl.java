@@ -2,11 +2,15 @@ package xyz.cupscoffee.backend.service.api.implementation;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import xyz.cupscoffee.files.api.Disk;
 import xyz.cupscoffee.files.api.File;
 import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.Metadata;
+import xyz.cupscoffee.files.api.SavFileReader;
 import xyz.cupscoffee.files.api.SavStructure;
+import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -19,10 +23,14 @@ import java.util.List;
 import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
 
 @Service
+@AllArgsConstructor
 public class SystemServiceImpl implements SystemService {
+    private final HttpSession session;
+
     @Override
-    public void importSavStructure(InputStream inputStream) {
-        throw new UnsupportedOperationException("Unimplemented method 'importSavStructure'");
+    public void importSavStructure(InputStream inputStream) throws InvalidFormatFileException {
+        SavStructure savStructure = SavFileReader.readSavFile(inputStream);
+        session.setAttribute("file", savStructure);
     }
 
     @Override
