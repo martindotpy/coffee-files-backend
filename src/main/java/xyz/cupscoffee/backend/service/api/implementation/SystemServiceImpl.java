@@ -8,6 +8,7 @@ import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.Metadata;
 import xyz.cupscoffee.files.api.SavStructure;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -19,6 +20,11 @@ import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
 
 @Service
 public class SystemServiceImpl implements SystemService {
+    @Override
+    public void importSavStructure(InputStream inputStream) {
+        throw new UnsupportedOperationException("Unimplemented method 'importSavStructure'");
+    }
+
     @Override
     public SavStructure createDefaultSavStructure() {
         throw new UnsupportedOperationException("Unimplemented method 'createDefaultSavStructure'");
