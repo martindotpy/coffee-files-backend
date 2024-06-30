@@ -17,7 +17,7 @@ import xyz.cupscoffee.backend.api.request.DeleteFileRequest;
 import xyz.cupscoffee.backend.api.request.DownloadFileRequest;
 import xyz.cupscoffee.backend.api.request.EditFileRequest;
 import xyz.cupscoffee.backend.api.request.MoveFileRequest;
-import xyz.cupscoffee.backend.api.request.ReadFileRequest;
+import xyz.cupscoffee.backend.api.request.ReadContentFileRequest;
 import xyz.cupscoffee.backend.api.request.UploadFileRequest;
 import xyz.cupscoffee.backend.api.response.ReadFileContentResponse;
 import xyz.cupscoffee.backend.api.squema.FileSquema;
@@ -41,7 +41,7 @@ public class FileController {
     }
 
     @GetMapping("/files/read")
-    public ResponseEntity<ReadFileContentResponse> readFile(ReadFileRequest readFileRequest) {
+    public ResponseEntity<ReadFileContentResponse> readFile(ReadContentFileRequest readFileRequest) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

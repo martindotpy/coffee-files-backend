@@ -9,7 +9,7 @@ import xyz.cupscoffee.backend.api.request.DeleteFileRequest;
 import xyz.cupscoffee.backend.api.request.DownloadFileRequest;
 import xyz.cupscoffee.backend.api.request.EditFileRequest;
 import xyz.cupscoffee.backend.api.request.MoveFileRequest;
-import xyz.cupscoffee.backend.api.request.ReadFileRequest;
+import xyz.cupscoffee.backend.api.request.ReadContentFileRequest;
 import xyz.cupscoffee.backend.api.request.UploadFileRequest;
 import xyz.cupscoffee.backend.service.api.interfaces.FileService;
 
@@ -26,7 +26,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String readFileContent(ReadFileRequest request) {
+    public String readFileContent(ReadContentFileRequest request) {
         throw new UnsupportedOperationException("Unimplemented method 'readFileContent'");
     }
 

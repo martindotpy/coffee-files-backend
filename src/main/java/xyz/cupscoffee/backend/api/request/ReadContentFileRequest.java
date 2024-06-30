@@ -5,6 +5,6 @@ import lombok.Getter;
 import xyz.cupscoffee.backend.api.squema.PathSquema;
 
 @Getter
-public class ReadFileRequest {
+public class ReadContentFileRequest {
     private PathSquema path;
 }
