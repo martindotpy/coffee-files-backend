@@ -28,7 +28,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authRequest -> {
                             authRequest
-                                    .requestMatchers("/api/hello", "/api/load").permitAll()
+                                    .requestMatchers(
+                                            "/api/hello",
+                                            "/api/system/import",
+                                            "/api/system/create")
+                                    .permitAll()
                                     .anyRequest().authenticated();
                         })
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

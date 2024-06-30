@@ -4,7 +4,7 @@ import lombok.Getter;
 import xyz.cupscoffee.backend.api.squema.enums.FileType;
 
 @Getter
-public class File extends Path {
+public class FileSquema extends PathSquema {
     private String name;
     private String content;
     private Long createdAt;

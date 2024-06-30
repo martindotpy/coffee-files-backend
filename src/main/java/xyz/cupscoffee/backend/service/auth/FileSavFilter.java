@@ -35,6 +35,7 @@ public class FileSavFilter extends OncePerRequestFilter {
         if (session.getAttribute("file") == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             session.invalidate();
+            filterChain.doFilter(request, response);
             return;
         }
 

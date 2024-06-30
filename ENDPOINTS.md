@@ -155,7 +155,7 @@
 
   ```http
   // Upload file
-  POST /api/files/upload
+  PATCH /api/files/upload
 
   body {
     path: Path:"A:/dir1/app.txt",
@@ -194,7 +194,7 @@
 
   ```http
   // Read content file
-  POST /api/files/read
+  GET /api/files/read
 
   body {
     path: Path:"A:/dir1/app.txt",
@@ -213,7 +213,7 @@
 
   ```http
   // Edit file
-  POST /api/files/edit
+  PATCH /api/files/edit
 
   body {
     path: Path:"A:/dir1/app.json",
@@ -232,7 +232,7 @@
 
   ```http
   // Delete file
-  POST /api/files/delete
+  DELETE /api/files/delete
 
   body {
     path: Path:"A:/dir1/app.txt",
