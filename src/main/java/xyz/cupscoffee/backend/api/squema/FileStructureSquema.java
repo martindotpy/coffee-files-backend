@@ -1,10 +1,12 @@
 package xyz.cupscoffee.backend.api.squema;
 
+import lombok.Getter;
+
 import java.time.ZoneOffset;
 
-import lombok.Getter;
-import xyz.cupscoffee.backend.api.squema.enums.FileType;
 import xyz.cupscoffee.files.api.File;
+
+import xyz.cupscoffee.backend.api.squema.enums.FileType;
 
 @Getter
 public class FileStructureSquema extends PathSquema {

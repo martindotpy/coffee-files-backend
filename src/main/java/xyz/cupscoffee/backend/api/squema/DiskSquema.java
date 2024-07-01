@@ -2,6 +2,7 @@ package xyz.cupscoffee.backend.api.squema;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import xyz.cupscoffee.files.api.Disk;
 
 @Getter

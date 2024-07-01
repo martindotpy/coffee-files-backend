@@ -1,10 +1,13 @@
 package xyz.cupscoffee.backend.api.squema;
 
+import lombok.Getter;
+
+import xyz.cupscoffee.files.api.File;
+
+import java.util.Base64;
 import java.time.ZoneOffset;
 
-import lombok.Getter;
 import xyz.cupscoffee.backend.api.squema.enums.FileType;
-import xyz.cupscoffee.files.api.File;
 
 @Getter
 public class FileSquema extends PathSquema {
@@ -36,6 +39,8 @@ public class FileSquema extends PathSquema {
             type = FileType.valueOf(fileTypeString);
         }
 
+        String content = new String(Base64.getEncoder().encode(file.getContent()).array());
+
         StringBuilder sb = new StringBuilder();
         file.getPath().forEach(p -> sb.append("\\" + p.toString()));
 
@@ -43,7 +48,7 @@ public class FileSquema extends PathSquema {
 
         return new FileSquema(
                 file.getName(),
-                file.getContent().toString(),
+                content,
                 file.getCreatedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getLastModifiedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getSize(),
