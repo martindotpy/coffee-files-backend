@@ -16,7 +16,6 @@ import xyz.cupscoffee.files.api.implementation.SimpleFile;
 import xyz.cupscoffee.files.api.implementation.SimpleFolder;
 import xyz.cupscoffee.files.api.implementation.SimpleSavStructure;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +27,6 @@ import java.time.ZoneOffset;
 import java.util.*;
 
 import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
-import xyz.cupscoffee.backend.util.PathUtil;
 
 @Service
 @AllArgsConstructor
@@ -127,7 +125,7 @@ public class SystemServiceImpl implements SystemService {
         Folder copia = new SimpleFolder(
                 "copia",
                 new LinkedList<>(),
-                new LinkedList<>(),
+                List.of(seguridad, informes, proyectos),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "copia"),
@@ -156,7 +154,6 @@ public class SystemServiceImpl implements SystemService {
                 1000000,
                 metadataFolder);
 
-
         HashMap<String, String> metadataText = new HashMap<>();
         metadataText.put("FileType", "TEXT");
         HashMap<String, String> metaFolder = new HashMap<>();
@@ -167,48 +164,43 @@ public class SystemServiceImpl implements SystemService {
         // Load golden_sunrise.json and golden_sunrise.jpg from resources
         SimpleFile informe1 = new SimpleFile(
                 "informes1.txt",
-                null,
+                ByteBuffer.wrap(new byte[0]),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "informes", "egresos"),
-                metadataText
-        );
+                metadataText);
 
         SimpleFile informe2 = new SimpleFile(
                 "informes2.txt",
-                null,
+                ByteBuffer.wrap(new byte[0]),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "informes", "egresos"),
-                metadataText
-        );
+                metadataText);
 
         SimpleFile alpha = new SimpleFile(
                 "alpha.txt",
-                null,
+                ByteBuffer.wrap(new byte[0]),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "proyectos", "alfa"),
-                metadataText
-        );
+                metadataText);
 
         SimpleFile beta = new SimpleFile(
                 "beta.txt",
-                null,
+                ByteBuffer.wrap(new byte[0]),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "proyectos", "beta"),
-                metadataText
-        );
+                metadataText);
 
         SimpleFile gamma = new SimpleFile(
                 "gamma.txt",
-                null,
+                ByteBuffer.wrap(new byte[0]),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "proyectos", "gamma"),
-                metadataText
-        );
+                metadataText);
 
         SimpleFolder seguridad_info = new SimpleFolder(
                 "info",
@@ -337,11 +329,10 @@ public class SystemServiceImpl implements SystemService {
                 metaFolder);
 
         SimpleDisk diskC = new SimpleDisk(
-                "C",
+                "Sistema",
                 rootC,
                 10000000,
-                new HashMap<>()
-        );
+                new HashMap<>());
 
         Disk[] disks = { diskDatos, diskC };
 
