@@ -22,7 +22,6 @@ import xyz.cupscoffee.backend.api.request.ReadContentFileRequest;
 import xyz.cupscoffee.backend.api.request.UploadFileRequest;
 import xyz.cupscoffee.backend.api.response.ReadFileContentResponse;
 import xyz.cupscoffee.backend.api.squema.FileSquema;
-import xyz.cupscoffee.backend.exception.InvalidPathException;
 import xyz.cupscoffee.backend.service.api.interfaces.FileService;
 
 @RestController
@@ -44,8 +43,7 @@ public class FileController {
     }
 
     @GetMapping("/read")
-    public ResponseEntity<ReadFileContentResponse> readFile(@RequestBody ReadContentFileRequest readFileRequest)
-            throws InvalidPathException {
+    public ResponseEntity<ReadFileContentResponse> readFile(@RequestBody ReadContentFileRequest readFileRequest) {
         String content = fileService.readFileContent(readFileRequest);
 
         return ResponseEntity.ok(
