@@ -216,7 +216,7 @@ public class SystemServiceImpl implements SystemService {
         StringBuilder sb = new StringBuilder();
 
         // Get the header
-        sb.append(savStructure.getHeader() + "\n");
+        sb.append(String.format("%-16s",savStructure.getHeader()) + "\n");
 
         // Write the disks
         Disk[] disks = savStructure.getDisks();
@@ -279,11 +279,11 @@ public class SystemServiceImpl implements SystemService {
 
                     if (method.getReturnType().equals(LocalDateTime.class)) {
                         LocalDateTime localDateTime = (LocalDateTime) method.invoke(metadata);
-                        sb.append(localDateTime.toEpochSecond(ZoneOffset.of("Z")) + ",");
+                        sb.append(localDateTime.toEpochSecond(ZoneOffset.of("Z")) + ";");
                         return;
                     }
 
-                    sb.append(method.invoke(metadata) + ",");
+                    sb.append(method.invoke(metadata) + ";");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
