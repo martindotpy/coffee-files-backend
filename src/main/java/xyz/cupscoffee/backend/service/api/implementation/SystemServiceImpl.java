@@ -1,6 +1,5 @@
 package xyz.cupscoffee.backend.service.api.implementation;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -45,156 +43,122 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public SavStructure createDefaultSavStructure() throws FileNotFoundException, IOException {
-        // Load golden_sunrise.json and golden_sunrise.jpg from resources
-        java.io.File goldenSunriseJsonFile = PathUtil.getResourcePath()
-                .resolve(Path.of("themes", "golden_sunrise.json"))
-                .toFile();
-        java.io.File goldenSunriseJpgFile = PathUtil.getResourcePath()
-                .resolve(Path.of("themes", "golden_sunrise.jpg"))
-                .toFile();
+        HashMap<String, String> metadataFile = new HashMap<>();
+        metadataFile.put("Author", "Elder");
+        metadataFile.put("FileType", "TXT");
+
+        File entrada = new SimpleFile(
+                "entrada.txt",
+                ByteBuffer.wrap(new byte[0]),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "distribución", "enero", "entrada.txt"),
+                metadataFile);
+        File lista = new SimpleFile(
+                "lista.txt",
+                ByteBuffer.wrap(new byte[0]),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "distribución", "enero", "lista.txt"),
+                metadataFile);
+        File salida = new SimpleFile(
+                "salida.txt",
+                ByteBuffer.wrap(new byte[0]),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "distribución", "febrero", "salida.txt"),
+                metadataFile);
+        File recepcion = new SimpleFile(
+                "recepción.txt",
+                ByteBuffer.wrap(new byte[0]),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "distribución", "febrero", "recepción.txt"),
+                metadataFile);
+
+        HashMap<String, String> metadataFolder = new HashMap<>();
+        metadataFolder.put("Author", "Elder");
+        Folder seguridad = new SimpleFolder(
+                "seguridad",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "copia", "seguridad"),
+                metadataFolder);
+        Folder informes = new SimpleFolder(
+                "informes",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "copia", "informes"),
+                metadataFolder);
+        Folder proyectos = new SimpleFolder(
+                "proyectos",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "copia", "proyectos"),
+                metadataFolder);
+        List<File> files = new LinkedList<>();
+        files.add(entrada);
+        files.add(lista);
+        Folder enero = new SimpleFolder(
+                "enero",
+                files.subList(0, files.size()),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "copia", "enero"),
+                metadataFolder);
+        files = new LinkedList<>();
+        files.add(salida);
+        files.add(recepcion);
+        Folder febrero = new SimpleFolder(
+                "febrero",
+                files.subList(0, files.size()),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "copia", "febrero"),
+                metadataFolder);
+        Folder copia = new SimpleFolder(
+                "copia",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "copia"),
+                metadataFolder);
+        Folder distribucion = new SimpleFolder(
+                "distribucion",
+                new LinkedList<>(),
+                List.of(enero, febrero),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "distribucion"),
+                metadataFolder);
+
+        Folder rootDatos = new SimpleFolder(
+                "Datos",
+                new LinkedList<>(),
+                List.of(copia, distribucion),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of(""),
+                metadataFolder);
+
+        Disk diskDatos = new SimpleDisk(
+                "Datos",
+                rootDatos,
+                1000000,
+                metadataFolder);
+
+        Disk[] disks = { diskDatos };
 
         HashMap<String, String> metadata = new HashMap<>();
-        metadata.put("author", "user");
-
-        HashMap<String, String> metadataJson = new HashMap<>();
-        metadataJson.put("FileType", "JSON");
-        metadataJson.put("author", "user");
-
-        HashMap<String, String> metadataJpg = new HashMap<>();
-        metadataJpg.put("FileType", "JPG");
-        metadataJpg.put("author", "user");
-
-        SimpleFile goldenSunriseJson = null;
-        try (FileInputStream fis = new FileInputStream(goldenSunriseJsonFile)) {
-            goldenSunriseJson = new SimpleFile(
-                    goldenSunriseJsonFile.getName(),
-                    ByteBuffer.wrap(fis.readAllBytes()),
-                    LocalDateTime.now(),
-                    LocalDateTime.now(),
-                    Path.of("", "themes", goldenSunriseJsonFile.getName()),
-                    metadataJson);
-
-        } catch (FileNotFoundException e) {
-            throw e;
-        }
-        SimpleFile goldenSunriseJpg = null;
-        try (FileInputStream fis = new FileInputStream(goldenSunriseJpgFile)) {
-            goldenSunriseJpg = new SimpleFile(
-                    goldenSunriseJpgFile.getName(),
-                    ByteBuffer.wrap(fis.readAllBytes()),
-                    LocalDateTime.now(),
-                    LocalDateTime.now(),
-                    Path.of("", "user", "Images", "themes", goldenSunriseJpgFile.getName()),
-                    metadataJpg);
-
-        } catch (FileNotFoundException e) {
-            throw e;
-        }
-
-        List<File> filesThemesA = new LinkedList<>();
-        filesThemesA.add(goldenSunriseJson);
-        SimpleFolder themesA = new SimpleFolder(
-                "themes",
-                filesThemesA,
-                new LinkedList<>(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of("", "themes"),
-                metadata);
-        List<File> filesThemesB = new LinkedList<>();
-        filesThemesB.add(goldenSunriseJpg);
-        SimpleFolder themesB = new SimpleFolder(
-                "themes",
-                filesThemesB,
-                new LinkedList<>(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of("", "user", "Images", "themes"),
-                metadata);
-
-        SimpleFolder documents = new SimpleFolder(
-                "Documents",
-                new LinkedList<>(),
-                new LinkedList<>(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of("", "user", "Documents"),
-                metadata);
-        SimpleFolder downloads = new SimpleFolder(
-                "Downloads",
-                new LinkedList<>(),
-                new LinkedList<>(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of("", "user", "Downloads"),
-                metadata);
-        List<Folder> foldersImages = new LinkedList<>();
-        foldersImages.add(themesB);
-        SimpleFolder images = new SimpleFolder(
-                "Images",
-                new LinkedList<>(),
-                foldersImages,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of("", "user", "Images"),
-                metadata);
-        SimpleFolder projects = new SimpleFolder(
-                "Projects",
-                new LinkedList<>(),
-                new LinkedList<>(),
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of("", "user", "Projects"),
-                metadata);
-
-        List<Folder> foldersUser = new LinkedList<>();
-        foldersUser.add(documents);
-        foldersUser.add(downloads);
-        foldersUser.add(images);
-        foldersUser.add(projects);
-        SimpleFolder user = new SimpleFolder(
-                "user",
-                new LinkedList<>(),
-                foldersUser,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of("", "user"),
-                metadata);
-
-        List<Folder> foldersA = new LinkedList<>();
-        foldersA.add(themesA);
-        SimpleFolder rootA = new SimpleFolder(
-                "",
-                new LinkedList<>(),
-                foldersA,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of(""),
-                metadata);
-        List<Folder> foldersB = new LinkedList<>();
-        foldersB.add(user);
-        SimpleFolder rootB = new SimpleFolder(
-                "",
-                new LinkedList<>(),
-                foldersB,
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                Path.of(""),
-                metadata);
-
-        SimpleDisk diskA = new SimpleDisk(
-                "A",
-                rootA,
-                10000000,
-                metadata);
-        SimpleDisk diskB = new SimpleDisk(
-                "B",
-                rootB,
-                10000000,
-                metadata);
-
-        Disk[] disks = { diskA, diskB };
-
         SimpleSavStructure savStructure = new SimpleSavStructure(
                 "CupsOfCoffee",
                 disks,
@@ -216,7 +180,7 @@ public class SystemServiceImpl implements SystemService {
         StringBuilder sb = new StringBuilder();
 
         // Get the header
-        sb.append(String.format("%-16s",savStructure.getHeader()) + "\n");
+        sb.append(String.format("%-16s", savStructure.getHeader()) + "\n");
 
         // Write the disks
         Disk[] disks = savStructure.getDisks();
