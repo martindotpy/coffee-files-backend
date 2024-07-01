@@ -156,7 +156,194 @@ public class SystemServiceImpl implements SystemService {
                 1000000,
                 metadataFolder);
 
-        Disk[] disks = { diskDatos };
+
+        HashMap<String, String> metadataText = new HashMap<>();
+        metadataText.put("FileType", "TEXT");
+        HashMap<String, String> metaFolder = new HashMap<>();
+        metaFolder.put("key1", "value1");
+        metaFolder.put("key2", "value2");
+        metaFolder.put("key3", "value3");
+
+        // Load golden_sunrise.json and golden_sunrise.jpg from resources
+        SimpleFile informe1 = new SimpleFile(
+                "informes1.txt",
+                null,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "informes", "egresos"),
+                metadataText
+        );
+
+        SimpleFile informe2 = new SimpleFile(
+                "informes2.txt",
+                null,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "informes", "egresos"),
+                metadataText
+        );
+
+        SimpleFile alpha = new SimpleFile(
+                "alpha.txt",
+                null,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "proyectos", "alfa"),
+                metadataText
+        );
+
+        SimpleFile beta = new SimpleFile(
+                "beta.txt",
+                null,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "proyectos", "beta"),
+                metadataText
+        );
+
+        SimpleFile gamma = new SimpleFile(
+                "gamma.txt",
+                null,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "proyectos", "gamma"),
+                metadataText
+        );
+
+        SimpleFolder seguridad_info = new SimpleFolder(
+                "info",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "seguridad", "info"),
+                metaFolder);
+
+        SimpleFolder seguridad_reportes = new SimpleFolder(
+                "reportes",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "seguridad", "reportes"),
+                metaFolder);
+
+        SimpleFolder seguridad_codigo_2023 = new SimpleFolder(
+                "2023",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "seguridad", "codigo", "2023"),
+                metaFolder);
+
+        SimpleFolder seguridad_codigo_2024 = new SimpleFolder(
+                "2024",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "seguridad", "codigo", "2024"),
+                metaFolder);
+
+        SimpleFolder seguridad_codigo = new SimpleFolder(
+                "info",
+                new LinkedList<>(),
+                List.of(seguridad_codigo_2023, seguridad_codigo_2024),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "seguridad", "codigo"),
+                metaFolder);
+
+        SimpleFolder seguridadc = new SimpleFolder(
+                "seguridad",
+                new LinkedList<>(),
+                List.of(seguridad_info, seguridad_reportes, seguridad_codigo),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "seguridad"),
+                metaFolder);
+
+        SimpleFolder informes_ingresos = new SimpleFolder(
+                "ingresos",
+                new LinkedList<>(),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "informes", "ingresos"),
+                metaFolder);
+
+        SimpleFolder informes_egresos = new SimpleFolder(
+                "egresos",
+                List.of(informe1, informe2),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "informes", "egresos"),
+                metaFolder);
+
+        SimpleFolder informesc = new SimpleFolder(
+                "egresos",
+                new LinkedList<>(),
+                List.of(informes_ingresos, informes_egresos),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "informes"),
+                metaFolder);
+
+        SimpleFolder alphaFolder = new SimpleFolder(
+                "alpha",
+                List.of(alpha),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "proyectos", "alpha"),
+                metaFolder);
+
+        SimpleFolder betaFolder = new SimpleFolder(
+                "beta",
+                List.of(beta),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "proyectos", "beta"),
+                metaFolder);
+
+        SimpleFolder gammaFolder = new SimpleFolder(
+                "alpha",
+                List.of(gamma),
+                new LinkedList<>(),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "proyectos", "gamma"),
+                metaFolder);
+
+        SimpleFolder proyectosc = new SimpleFolder(
+                "proyectos",
+                new LinkedList<>(),
+                List.of(alphaFolder, betaFolder, gammaFolder),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of("", "proyectos"),
+                metaFolder);
+
+        SimpleFolder rootC = new SimpleFolder(
+                "",
+                new LinkedList<>(),
+                List.of(seguridadc, informesc, proyectosc),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                Path.of(""),
+                metaFolder);
+
+        SimpleDisk diskC = new SimpleDisk(
+                "C",
+                rootC,
+                10000000,
+                new HashMap<>()
+        );
+
+        Disk[] disks = { diskDatos, diskC };
 
         HashMap<String, String> metadata = new HashMap<>();
         SimpleSavStructure savStructure = new SimpleSavStructure(
