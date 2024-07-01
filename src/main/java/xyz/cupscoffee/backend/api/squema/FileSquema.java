@@ -26,13 +26,20 @@ public class FileSquema extends PathSquema {
         this.type = type;
     }
 
-    public static FileSquema from(File file) {
+    public static FileSquema from(File file, String diskName) {
+        String fileTypeString = file.getOtherMetadata().get("FileType");
         FileType type = null;
-        try {
-            FileType.valueOf(file.getOtherMetadata().get("FileType"));
-        } catch (NullPointerException e) {
+
+        if (fileTypeString == null) {
             type = FileType.TXT;
+        } else {
+            type = FileType.valueOf(fileTypeString);
         }
+
+        StringBuilder sb = new StringBuilder();
+        file.getPath().forEach(p -> sb.append("\\" + p.toString()));
+
+        String absolutePath = diskName + ":" + sb.toString();
 
         return new FileSquema(
                 file.getName(),
@@ -40,7 +47,7 @@ public class FileSquema extends PathSquema {
                 file.getCreatedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getLastModifiedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getSize(),
-                file.getPath().toString(),
+                absolutePath,
                 type);
     }
 }

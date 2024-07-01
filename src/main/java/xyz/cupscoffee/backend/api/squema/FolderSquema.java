@@ -27,18 +27,23 @@ public class FolderSquema extends PathSquema {
         this.isRoot = isRoot;
     }
 
-    public static FolderSquema from(Folder folder) {
+    public static FolderSquema from(Folder folder, String diskName) {
         if (folder == null)
             return null;
 
         FileStructureSquema[] files = folder.getFiles().stream()
-                .map(FileStructureSquema::from)
+                .map(f -> FileStructureSquema.from(f, diskName))
                 .toArray(FileStructureSquema[]::new);
         FolderSquema[] folders = folder.getFolders().stream()
-                .map(FolderSquema::from)
+                .map(f -> FolderSquema.from(f, diskName))
                 .toArray(FolderSquema[]::new);
 
-        boolean isRoot = folder.getPath().toString().split("\\\\").length == 1;
+        StringBuilder sb = new StringBuilder();
+        folder.getPath().forEach(p -> sb.append("\\" + p.toString()));
+
+        String absolutePath = diskName + ":" + sb.toString();
+
+        boolean isRoot = folder.getPath().toString().equals("");
 
         return new FolderSquema(
                 folder.getName(),
@@ -48,6 +53,6 @@ public class FolderSquema extends PathSquema {
                 folder.getLastModifiedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 folder.getSize(),
                 isRoot,
-                folder.getPath().toString());
+                absolutePath);
     }
 }

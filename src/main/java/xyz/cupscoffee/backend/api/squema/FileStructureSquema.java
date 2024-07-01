@@ -14,8 +14,8 @@ public class FileStructureSquema extends PathSquema {
     private Long size;
     private FileType type;
 
-    public FileStructureSquema(String path, String name, Long createdAt, Long lastModifiedAt, Long size,
-            FileType type) {
+    public FileStructureSquema(String name, Long createdAt, Long lastModifiedAt, Long size,
+            FileType type, String path) {
         super(path);
         this.name = name;
         this.createdAt = createdAt;
@@ -24,21 +24,27 @@ public class FileStructureSquema extends PathSquema {
         this.type = type;
     }
 
-    public static FileStructureSquema from(File file) {
+    public static FileStructureSquema from(File file, String diskName) {
+        String fileTypeString = file.getOtherMetadata().get("FileType");
         FileType type = null;
-        try {
-            FileType.valueOf(file.getOtherMetadata().get("FileType"));
-        } catch (NullPointerException e) {
+
+        if (fileTypeString == null) {
             type = FileType.TXT;
+        } else {
+            type = FileType.valueOf(fileTypeString);
         }
 
+        StringBuilder sb = new StringBuilder();
+        file.getPath().forEach(p -> sb.append("\\" + p.toString()));
+
+        String absolutePath = diskName + ":" + sb.toString();
+
         return new FileStructureSquema(
-                file.getPath().toString(),
                 file.getName(),
                 file.getCreatedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getLastModifiedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getSize(),
-                type
-        );
+                type,
+                absolutePath);
     }
 }
