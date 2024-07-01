@@ -19,6 +19,7 @@ import xyz.cupscoffee.backend.api.response.SyncResponse;
 import xyz.cupscoffee.backend.api.response.SystemStatusResponse;
 import xyz.cupscoffee.backend.api.squema.SavSquema;
 import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
+import xyz.cupscoffee.files.api.SavStructure;
 import xyz.cupscoffee.files.api.exception.InvalidFormatFileException;
 
 @RestController
@@ -61,7 +62,12 @@ public class SystemController {
 
     @GetMapping("/sync")
     public ResponseEntity<SyncResponse> getSyncSystem() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        SavStructure currentSavStructure = systemService.syncSavStructure();
+
+        return ResponseEntity.ok(
+                SyncResponse.builder()
+                        .system(SavSquema.from(currentSavStructure))
+                        .build());
     }
 
     @PostMapping("/logout")

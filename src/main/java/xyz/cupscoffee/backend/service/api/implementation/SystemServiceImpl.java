@@ -194,7 +194,7 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public SavStructure syncSavStructure() {
-        throw new UnsupportedOperationException("Unimplemented method 'syncSavStructure'");
+        return (SavStructure) session.getAttribute("file");
     }
 
     @Override
