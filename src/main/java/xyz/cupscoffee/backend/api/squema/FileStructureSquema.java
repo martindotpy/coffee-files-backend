@@ -25,12 +25,20 @@ public class FileStructureSquema extends PathSquema {
     }
 
     public static FileStructureSquema from(File file) {
+        FileType type = null;
+        try {
+            FileType.valueOf(file.getOtherMetadata().get("FileType"));
+        } catch (NullPointerException e) {
+            type = FileType.TXT;
+        }
+
         return new FileStructureSquema(
                 file.getPath().toString(),
                 file.getName(),
                 file.getCreatedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getLastModifiedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getSize(),
-                FileType.valueOf(file.getOtherMetadata().get("FileType")));
+                type
+        );
     }
 }
