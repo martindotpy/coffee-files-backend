@@ -246,7 +246,7 @@ public class SystemServiceImpl implements SystemService {
     private void loadFileAsString(File file, StringBuilder sb) {
         sb.append("*" + file.getName() + "{");
 
-        String content = new String(file.getContent().array(), StandardCharsets.UTF_8);
+        String content = new String(file.getContent().duplicate().array(), StandardCharsets.UTF_8);
 
         sb.append(content);
 

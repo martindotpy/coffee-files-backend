@@ -39,7 +39,7 @@ public class FileSquema extends PathSquema {
             type = FileType.valueOf(fileTypeString);
         }
 
-        String content = new String(Base64.getEncoder().encode(file.getContent()).array());
+        String content = new String(Base64.getEncoder().encode(file.getContent().duplicate()).array());
 
         StringBuilder sb = new StringBuilder();
         file.getPath().forEach(p -> sb.append("\\" + p.toString()));
