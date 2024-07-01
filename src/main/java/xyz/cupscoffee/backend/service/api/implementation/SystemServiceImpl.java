@@ -1,5 +1,6 @@
 package xyz.cupscoffee.backend.service.api.implementation;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,10 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import xyz.cupscoffee.backend.service.api.interfaces.SystemService;
 import xyz.cupscoffee.backend.util.PathUtil;
@@ -261,7 +259,7 @@ public class SystemServiceImpl implements SystemService {
     private void loadFileAsString(File file, StringBuilder sb) {
         sb.append("*" + file.getName() + "{");
 
-        String content = new String(file.getContent().duplicate().array(), StandardCharsets.UTF_8);
+        String content = new String(Base64.getEncoder().encode(file.getContent().duplicate()).array());
 
         sb.append(content);
 
