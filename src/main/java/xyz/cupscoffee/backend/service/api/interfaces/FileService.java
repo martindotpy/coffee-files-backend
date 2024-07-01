@@ -7,6 +7,7 @@ import xyz.cupscoffee.backend.api.request.EditFileRequest;
 import xyz.cupscoffee.backend.api.request.MoveFileRequest;
 import xyz.cupscoffee.backend.api.request.ReadContentFileRequest;
 import xyz.cupscoffee.backend.api.request.UploadFileRequest;
+import xyz.cupscoffee.backend.exception.InvalidPathException;
 import xyz.cupscoffee.files.api.File;
 
 public interface FileService {
@@ -14,7 +15,7 @@ public interface FileService {
 
     File createFile(CreateFileRequest request);
 
-    String readFileContent(ReadContentFileRequest request);
+    String readFileContent(ReadContentFileRequest request) throws InvalidPathException;
 
     File editFile(EditFileRequest request);
 

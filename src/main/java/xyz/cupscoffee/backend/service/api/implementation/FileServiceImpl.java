@@ -38,7 +38,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String readFileContent(ReadContentFileRequest request) {
+    public String readFileContent(ReadContentFileRequest request) throws InvalidPathException {
         SavStructure savStructure = (SavStructure) session.getAttribute("file");
         String rawPath = request.getPath().getPath();
 
@@ -52,8 +52,8 @@ public class FileServiceImpl implements FileService {
                 continue;
             }
 
-            Path path = Path.of("", rawPath.substring(indexOfColon + 2).split("\\\\")); // Skip the "" - Root with the +
-                                                                                        // 2
+            Path path = Path.of("", rawPath.substring(indexOfColon + 2).split("\\\\")); // Skip the "" - Root with the
+                                                                                        // + 2
             File file = findFileByPath(disks[i].getRootFolder(), path);
 
             if (file == null) {
