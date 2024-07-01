@@ -149,7 +149,7 @@ public class SystemServiceImpl implements SystemService {
                 List.of(documents, downloads, images, projects),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of("", "user"),
+                Path.of("B:", "user"),
                 metadata);
 
         SimpleFolder rootA = new SimpleFolder(
