@@ -177,7 +177,7 @@ public class SystemServiceImpl implements SystemService {
         SimpleDisk diskB = new SimpleDisk(
                 "B",
                 rootB,
-                2400,
+                10000000,
                 metadata);
 
         Disk[] disks = { diskA, diskB };
