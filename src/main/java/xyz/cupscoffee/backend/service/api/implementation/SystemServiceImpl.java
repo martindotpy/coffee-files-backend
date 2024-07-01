@@ -93,17 +93,21 @@ public class SystemServiceImpl implements SystemService {
             throw e;
         }
 
+        List<File> filesThemesA = new LinkedList<>();
+        filesThemesA.add(goldenSunriseJson);
         SimpleFolder themesA = new SimpleFolder(
                 "themes",
-                List.of(goldenSunriseJson),
+                filesThemesA,
                 new LinkedList<>(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "themes"),
                 metadata);
+        List<File> filesThemesB = new LinkedList<>();
+        filesThemesB.add(goldenSunriseJpg);
         SimpleFolder themesB = new SimpleFolder(
                 "themes",
-                List.of(goldenSunriseJpg),
+                filesThemesB,
                 new LinkedList<>(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
@@ -126,10 +130,12 @@ public class SystemServiceImpl implements SystemService {
                 LocalDateTime.now(),
                 Path.of("", "user", "Downloads"),
                 metadata);
+        List<Folder> foldersImages = new LinkedList<>();
+        foldersImages.add(themesB);
         SimpleFolder images = new SimpleFolder(
                 "Images",
                 new LinkedList<>(),
-                List.of(themesB),
+                foldersImages,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "user", "Images"),
@@ -143,27 +149,36 @@ public class SystemServiceImpl implements SystemService {
                 Path.of("", "user", "Projects"),
                 metadata);
 
+        List<Folder> foldersUser = new LinkedList<>();
+        foldersUser.add(documents);
+        foldersUser.add(downloads);
+        foldersUser.add(images);
+        foldersUser.add(projects);
         SimpleFolder user = new SimpleFolder(
                 "user",
                 new LinkedList<>(),
-                List.of(documents, downloads, images, projects),
+                foldersUser,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of("", "user"),
                 metadata);
 
+        List<Folder> foldersA = new LinkedList<>();
+        foldersA.add(themesA);
         SimpleFolder rootA = new SimpleFolder(
                 "",
                 new LinkedList<>(),
-                List.of(themesA),
+                foldersA,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of(""),
                 metadata);
+        List<Folder> foldersB = new LinkedList<>();
+        foldersB.add(user);
         SimpleFolder rootB = new SimpleFolder(
                 "",
                 new LinkedList<>(),
-                List.of(user),
+                foldersB,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 Path.of(""),

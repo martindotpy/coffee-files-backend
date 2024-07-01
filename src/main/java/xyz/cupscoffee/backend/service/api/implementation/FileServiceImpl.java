@@ -1,7 +1,13 @@
 package xyz.cupscoffee.backend.service.api.implementation;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -11,14 +17,14 @@ import xyz.cupscoffee.files.api.Disk;
 import xyz.cupscoffee.files.api.File;
 import xyz.cupscoffee.files.api.Folder;
 import xyz.cupscoffee.files.api.SavStructure;
-
+import xyz.cupscoffee.files.api.implementation.SimpleFile;
 import xyz.cupscoffee.backend.api.request.CreateFileRequest;
 import xyz.cupscoffee.backend.api.request.DeleteFileRequest;
 import xyz.cupscoffee.backend.api.request.DownloadFileRequest;
 import xyz.cupscoffee.backend.api.request.EditFileRequest;
 import xyz.cupscoffee.backend.api.request.MoveFileRequest;
 import xyz.cupscoffee.backend.api.request.ReadContentFileRequest;
-import xyz.cupscoffee.backend.api.request.UploadFileRequest;
+import xyz.cupscoffee.backend.api.squema.enums.FileType;
 import xyz.cupscoffee.backend.exception.InvalidPathException;
 import xyz.cupscoffee.backend.service.api.interfaces.FileService;
 
@@ -28,8 +34,62 @@ public class FileServiceImpl implements FileService {
     private final HttpSession session;
 
     @Override
-    public File uploadFile(UploadFileRequest request) {
-        throw new UnsupportedOperationException("Unimplemented method 'uploadFile'");
+    public File uploadFile(String rawPath, FileType type, InputStream inputStream) throws IOException {
+        int indexOfColon = rawPath.indexOf(":");
+        String diskName = rawPath.substring(0, indexOfColon);
+
+        SavStructure savStructure = (SavStructure) session.getAttribute("file");
+        Disk[] disks = savStructure.getDisks();
+
+        for (int i = 0; i < disks.length; i++) {
+            if (!disks[i].getName().equals(diskName)) {
+                continue;
+            }
+
+            String[] pathString = rawPath.substring(indexOfColon + 2).split("\\\\"); // Skip the "" - Root with the + 2
+            Path path = Path.of("", Arrays.copyOfRange(pathString, 0, pathString.length - 1));
+            Folder folder = findFolderByPath(disks[i].getRootFolder(), path);
+
+            if (folder == null) {
+                throw new InvalidPathException("Invalid path: " + rawPath);
+            }
+
+            HashMap<String, String> otherMetadata = new HashMap<>();
+            otherMetadata.put("FileType", type.toString());
+            otherMetadata.put("author", "user");
+
+            File newFile = new SimpleFile(
+                    pathString[pathString.length - 1],
+                    ByteBuffer.wrap(inputStream.readAllBytes()),
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    path.resolve(pathString[pathString.length - 1]),
+                    otherMetadata);
+
+            folder.getFiles().add(newFile);
+
+            return newFile;
+        }
+
+        throw new InvalidPathException("Invalid path: " + rawPath);
+    }
+
+    private Folder findFolderByPath(Folder parentFolder, Path path) {
+        if (path.toString().startsWith(parentFolder.getPath().toString())) {
+            for (Folder folder : parentFolder.getFolders()) {
+                if (folder.getPath().equals(path)) {
+                    return folder;
+                }
+
+                Folder foundFolder = findFolderByPath(folder, path);
+
+                if (foundFolder != null) {
+                    return foundFolder;
+                }
+            }
+        }
+
+        return null;
     }
 
     @Override

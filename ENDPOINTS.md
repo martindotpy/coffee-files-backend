@@ -155,7 +155,7 @@
 
   ```http
   // Upload file
-  PATCH /api/files/upload
+  POST /api/files/upload
 
   body {
     path: Path:"A:/dir1/app.txt",
