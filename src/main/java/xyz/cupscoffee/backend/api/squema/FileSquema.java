@@ -27,6 +27,13 @@ public class FileSquema extends PathSquema {
     }
 
     public static FileSquema from(File file) {
+        FileType type = null;
+        try {
+            FileType.valueOf(file.getOtherMetadata().get("FileType"));
+        } catch (NullPointerException e) {
+            type = FileType.TXT;
+        }
+
         return new FileSquema(
                 file.getName(),
                 file.getContent().toString(),
@@ -34,6 +41,6 @@ public class FileSquema extends PathSquema {
                 file.getLastModifiedDateTime().toEpochSecond(ZoneOffset.of("Z")),
                 file.getSize(),
                 file.getPath().toString(),
-                FileType.valueOf(file.getOtherMetadata().get("FileType")));
+                type);
     }
 }
