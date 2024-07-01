@@ -73,7 +73,7 @@ public class SystemServiceImpl implements SystemService {
                     ByteBuffer.wrap(fis.readAllBytes()),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    Path.of("", "themes", goldenSunriseJsonFile.getName()),
+                    Path.of("A:", "themes", goldenSunriseJsonFile.getName()),
                     metadataJson);
 
         } catch (FileNotFoundException e) {
@@ -86,7 +86,7 @@ public class SystemServiceImpl implements SystemService {
                     ByteBuffer.wrap(fis.readAllBytes()),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
-                    Path.of("", "themes", goldenSunriseJpgFile.getName()),
+                    Path.of("B:", "user", "Images", "themes", goldenSunriseJpgFile.getName()),
                     metadataJpg);
 
         } catch (FileNotFoundException e) {
@@ -99,7 +99,7 @@ public class SystemServiceImpl implements SystemService {
                 new LinkedList<>(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of("", "themes"),
+                Path.of("A:", "themes"),
                 metadata);
         SimpleFolder themesB = new SimpleFolder(
                 "themes",
@@ -107,7 +107,7 @@ public class SystemServiceImpl implements SystemService {
                 new LinkedList<>(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of("", "user", "Images", "themes"),
+                Path.of("B:", "user", "Images", "themes"),
                 metadata);
 
         SimpleFolder documents = new SimpleFolder(
@@ -116,7 +116,7 @@ public class SystemServiceImpl implements SystemService {
                 new LinkedList<>(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of("", "user", "Documents"),
+                Path.of("B:", "user", "Documents"),
                 metadata);
         SimpleFolder downloads = new SimpleFolder(
                 "Downloads",
@@ -124,7 +124,7 @@ public class SystemServiceImpl implements SystemService {
                 new LinkedList<>(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of("", "user", "Downloads"),
+                Path.of("B:", "user", "Downloads"),
                 metadata);
         SimpleFolder images = new SimpleFolder(
                 "Images",
@@ -132,7 +132,7 @@ public class SystemServiceImpl implements SystemService {
                 List.of(themesB),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of("", "user", "Images"),
+                Path.of("B:", "user", "Images"),
                 metadata);
         SimpleFolder projects = new SimpleFolder(
                 "Projects",
@@ -140,7 +140,7 @@ public class SystemServiceImpl implements SystemService {
                 new LinkedList<>(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of("", "user", "Projects"),
+                Path.of("B:", "user", "Projects"),
                 metadata);
 
         SimpleFolder user = new SimpleFolder(
@@ -158,7 +158,7 @@ public class SystemServiceImpl implements SystemService {
                 List.of(themesA),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of(""),
+                Path.of("A:\\"),
                 metadata);
         SimpleFolder rootB = new SimpleFolder(
                 "",
@@ -166,7 +166,7 @@ public class SystemServiceImpl implements SystemService {
                 List.of(user),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                Path.of(""),
+                Path.of("B:\\"),
                 metadata);
 
         SimpleDisk diskA = new SimpleDisk(

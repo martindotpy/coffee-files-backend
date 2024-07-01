@@ -57,7 +57,7 @@
     last_modified: number;
     size: number;
     path: Path;
-    is_root: boolean;
+    root: boolean;
   }
   ```
 
