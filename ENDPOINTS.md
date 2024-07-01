@@ -25,8 +25,8 @@
   type File {
     name: string;
     content: string;
-    created: number;
-    last_modified: number;
+    created_at: number;
+    last_modified_at: number;
     size: number;
     type: TypeFile;
     path: Path;
@@ -38,8 +38,8 @@
   ```ts
   type FileStructure {
     name: string;
-    created: number;
-    last_modified: number;
+    created_at: number;
+    last_modified_at: number;
     size: number;
     type: TypeFile;
     path: Path;
@@ -53,8 +53,8 @@
     name: string;
     files: FileStructure[];
     folders: Folder[];
-    created: number;
-    last_modified: number;
+    created_at: number;
+    last_modified_at: number;
     size: number;
     path: Path;
     root: boolean;
@@ -301,17 +301,16 @@
 ```
 
 A:\
-  themes\
-    golden_sunrise.json // From project resources
+ themes\
+ golden_sunrise.json // From project resources
 
 B:\
-  user\
-    Documents\
-    Downloads\
-    Images\
-      themes\
-        golden_sunrise.jpg // From project resources
-    Projects\
+ user\
+ Documents\
+ Downloads\
+ Images\
+ themes\
+ golden_sunrise.jpg // From project resources Projects\
 
 ### Disk
 
